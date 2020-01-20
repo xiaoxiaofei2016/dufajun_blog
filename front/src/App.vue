@@ -1,13 +1,36 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <Nav v-if="isShowNav"/>
+    <div class="layout">
+      <router-view/>
+      <Slider v-if="isShowNav" class="slider"/>
+    </div>
   </div>
 </template>
 
 <script>
+import Nav from '@/components/nav.vue'
+import Slider from '@/components/Slider.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Nav,
+    Slider
+  },
+  data () {
+    return {
+      isShowNav: false
+    }
+  },
+  watch: {
+    $route (val, oldVal) {
+      if (val.path === '/' || val.path === '/publishArticle') {
+        this.isShowNav = false
+      } else {
+        this.isShowNav = true
+      }
+    }
+  }
 }
 </script>
 
@@ -18,6 +41,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
